@@ -1,25 +1,26 @@
-import React from "react"
-import DayList from "./DayList"
-import Appointment from "./Appointment"
-import {
-  getAppointmentsForDay,
-  getInterview,
-  getInterviewersForDay,
-} from "helpers/selectors"
+import React from "react";
+import DayList from "./DayList";
+import Appointment from "./Appointment";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData"
-import "components/Application.scss"
+import "components/Application.scss";
 
 // Import state and functions from useApplicationData hook
 export default function Application(props) {
-  const { state, setDay, bookInterview, cancelInterview } = useApplicationData()
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
 
   // Call selector functions to get data for given day
-  const dailyAppointments = getAppointmentsForDay(state, state.day)
-
-  const appointments = dailyAppointments.map(appointment => {
-    const interview = getInterview(state, appointment.interview)
-    const interviewers = getInterviewersForDay(state, state.day)
-
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  
+  const appointments = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+    const interviewers = getInterviewersForDay(state, state.day);
+    
     return (
       <Appointment
         key={appointment.id}
@@ -30,7 +31,7 @@ export default function Application(props) {
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
       />
-    )
+    );
   })
 
   return (
@@ -43,7 +44,11 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={state.days} value={state.day} onChange={setDay} />
+        <DayList
+          days={state.days}
+          value={state.day}
+          onChange={setDay}
+        />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -56,5 +61,5 @@ export default function Application(props) {
         <Appointment key="last" time="5pm" />
       </section>
     </main>
-  )
+  );
 }
